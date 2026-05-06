@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Digital Marketer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --card: #161616;
+    --accent: #2563eb;
+    --accent2: #38bdf8;
+    --text: #f0ede8;
+    --muted: #6b6b6b;
+    --border: #222222;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 100px 5% 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(37,99,235,0.18) 0%, transparent 70%);
+    top: 10%; left: -10%;
+    pointer-events: none;
+    animation: floatGlow 8s ease-in-out infinite;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    bottom: 10%; right: 5%;
+    pointer-events: none;
+    animation: floatGlow 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes floatGlow {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(30px, -30px); }
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(37,99,235,0.1);
+    border: 1px solid rgba(37,99,235,0.3);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.5); }
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero-name .accent { color: var(--accent); }
+
+  .hero-role {
+    font-family: 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--muted);
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: #888;
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(37,99,235,0.35);
+  }
+
+  .btn-secondary {
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    background: transparent;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--muted);
+    background: var(--surface);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.5s ease both;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .stat-number span { color: var(--accent); }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 100px 5%;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    line-height: 1.15;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--surface); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .skill-card:hover {
+    border-color: rgba(37,99,235,0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .skill-card:hover::before { opacity: 1; }
+
+  .skill-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .skill-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .skill-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-tag {
+    background: rgba(37,99,235,0.08);
+    border: 1px solid rgba(37,99,235,0.12);
+    color: var(--accent);
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline {
+    position: relative;
+    max-width: 720px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .timeline-item {
+    padding-left: 32px;
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 8px;
+    width: 9px; height: 9px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(37,99,235,0.6);
+  }
+
+  .timeline-date {
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .timeline-role {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+  }
+
+  .timeline-company {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+
+  .timeline-points {
+    list-style: none;
+  }
+
+  .timeline-points li {
+    font-size: 0.9rem;
+    color: #888;
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .timeline-points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--surface); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .project-card:hover {
+    border-color: rgba(37,99,235,0.35);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+
+  .project-thumb {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-thumb-1 { background: linear-gradient(135deg, #1a0a00, #3d1800); }
+  .project-thumb-2 { background: linear-gradient(135deg, #0a0a1a, #001830); }
+  .project-thumb-3 { background: linear-gradient(135deg, #0a1a0a, #001800); }
+  .project-thumb-4 { background: linear-gradient(135deg, #1a0a1a, #2d0030); }
+
+  .project-body { padding: 24px; }
+
+  .project-type {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .project-results {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .result-item {
+    text-align: center;
+  }
+
+  .result-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent2);
+  }
+
+  .result-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── TOOLS ── */
+  .tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tool-pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .tool-pill:hover {
+    border-color: rgba(37,99,235,0.45);
+    color: var(--accent);
+    background: rgba(37,99,235,0.08);
+    transform: translateY(-2px);
+  }
+
+  .tool-pill .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--surface);
+    text-align: center;
+  }
+
+  #contact .section-title { margin: 0 auto 12px; }
+  #contact .section-desc { margin: 0 auto 40px; }
+
+  .contact-links {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: rgba(37,99,235,0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    color: var(--accent);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 28px 5%;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    nav { padding: 16px 4%; }
+    .nav-links { display: none; }
+    section { padding: 70px 4%; }
+    .hero-stats { gap: 24px; }
+    .contact-links { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">DM<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for Work</div>
+    <h1 class="hero-name">Your <span class="accent">Name</span></h1>
+    <p class="hero-role">Digital Marketing Specialist</p>
+    <p class="hero-desc">
+      1 year of hands-on experience in Meta Ads, Google Ads, SEO, Social Media, Shopify & GMB. 
+      I turn data into decisions and clicks into customers.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View My Work ↓</a>
+      <a href="#contact" class="btn-secondary">Let's Connect</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">1<span>+</span></div>
+        <div class="stat-label">Year Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">10<span>+</span></div>
+        <div class="stat-label">Campaigns Run</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">4<span>x</span></div>
+        <div class="stat-label">Avg ROAS</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Skills Mastered</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <div class="section-label">What I Do</div>
+    <h2 class="section-title">Core Skills</h2>
+    <p class="section-desc">Specialized in performance marketing and organic growth across multiple digital channels.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <span class="skill-icon">📱</span>
+      <div class="skill-name">Meta Ads</div>
+      <div class="skill-desc">Facebook & Instagram ad campaigns from strategy to execution. ROAS optimization, funnel building, retargeting.</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Campaign Setup</span>
+        <span class="skill-tag">A/B Testing</span>
+        <span class="skill-tag">Retargeting</span>
+        <span class="skill-tag">ROAS</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">🔍</span>
+      <div class="skill-name">Google Ads</div>
+      <div class="skill-desc">Search, Display & Shopping campaigns. Keyword research, Quality Score optimization, conversion tracking.</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Search Ads</span>
+        <span class="skill-tag">Shopping</span>
+        <span class="skill-tag">Remarketing</span>
+        <span class="skill-tag">QS Optimization</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">🔗</span>
+      <div class="skill-name">SEO Off-Page</div>
+      <div class="skill-desc">High-quality backlink building, guest posting, competitor analysis and domain authority growth.</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Link Building</span>
+        <span class="skill-tag">Guest Posts</span>
+        <span class="skill-tag">Outreach</span>
+        <span class="skill-tag">DA Growth</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">📸</span>
+      <div class="skill-name">Social Media</div>
+      <div class="skill-desc">Organic Instagram & Facebook growth. Content calendars, Reels strategy, engagement optimization.</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Reels Strategy</span>
+        <span class="skill-tag">Content Calendar</span>
+        <span class="skill-tag">Engagement</span>
+        <span class="skill-tag">Growth</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">🛍️</span>
+      <div class="skill-name">Shopify Optimization</div>
+      <div class="skill-desc">CRO, speed optimization, abandoned cart recovery, product page optimization for maximum conversions.</div>
+      <div class="skill-tags">
+        <span class="skill-tag">CRO</span>
+        <span class="skill-tag">Speed</span>
+        <span class="skill-tag">Cart Recovery</span>
+        <span class="skill-tag">SEO</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">📍</span>
+      <div class="skill-name">Google My Business</div>
+      <div class="skill-desc">Local SEO domination. GMB profile optimization, review management, local pack ranking strategy.</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Local SEO</span>
+        <span class="skill-tag">Review Management</span>
+        <span class="skill-tag">Map Pack</span>
+        <span class="skill-tag">Citations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="reveal">
+    <div class="section-label">Career</div>
+    <h2 class="section-title">Experience</h2>
+    <p class="section-desc">1 year of real-world digital marketing — building skills that deliver measurable results.</p>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-date">2024 — Present</div>
+      <div class="timeline-role">Digital Marketing Executive</div>
+      <div class="timeline-company">Company Name, City</div>
+      <ul class="timeline-points">
+        <li>Managed Meta Ads campaigns with ₹50K+ monthly budget, achieving 4x average ROAS</li>
+        <li>Ran Google Search campaigns targeting high-intent keywords, reducing CPC by 30%</li>
+        <li>Grew Instagram account organically from X to Y followers through Reels strategy</li>
+        <li>Optimized Shopify store conversion rate from 1.2% to 2.8% through CRO techniques</li>
+        <li>Built 200+ quality backlinks improving domain authority from 12 to 28</li>
+        <li>Managed GMB profiles for 3 clients, getting them into local map pack</li>
+      </ul>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-date">2023 — 2024</div>
+      <div class="timeline-role">Digital Marketing Intern</div>
+      <div class="timeline-company">Company Name, City</div>
+      <ul class="timeline-points">
+        <li>Assisted in setting up Meta Ads campaigns and audience targeting</li>
+        <li>Learned Google Ads fundamentals and managed small campaigns independently</li>
+        <li>Created social media content and managed posting schedules</li>
+        <li>Performed keyword research and on-page SEO optimizations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Campaign Results</h2>
+    <p class="section-desc">Real campaigns, real numbers. Here's what I've achieved for clients.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb project-thumb-1">📱</div>
+      <div class="project-body">
+        <div class="project-type">Meta Ads — E-commerce</div>
+        <div class="project-title">Face Wash Brand — Sales Campaign</div>
+        <div class="project-desc">Full-funnel Meta campaign for a D2C skincare brand. TOFU Reels + MOFU Carousels + BOFU retargeting strategy.</div>
+        <div class="project-results">
+          <div class="result-item">
+            <div class="result-num">4.2x</div>
+            <div class="result-label">ROAS</div>
+          </div>
+          <div class="result-item">
+            <div class="result-num">₹50K</div>
+            <div class="result-label">Budget</div>
+          </div>
+          <div class="result-item">
+            <div class="result-num">2.1%</div>
+            <div class="result-label">CTR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb project-thumb-2">🔍</div>
+      <div class="project-body">
+        <div class="project-type">Google Ads — Lead Generation</div>
+        <div class="project-title">Local Business — Leads Campaign</div>
+        <div class="project-desc">Google Search campaign for a local service business. Keyword optimization + negative keywords strategy.</div>
+        <div class="project-results">
+          <div class="result-item">
+            <div class="result-num">45+</div>
+            <div class="result-label">Monthly Leads</div>
+          </div>
+          <div class="result-item">
+            <div class="result-num">-30%</div>
+            <div class="result-label">CPC Reduced</div>
+          </div>
+          <div class="result-item">
+            <div class="result-num">8.5</div>
+            <div class="result-label">Quality Score</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb project-thumb-3">📸</div>
+      <div class="project-body">
+        <div class="project-type">Social Media — Organic Growth</div>
+        <div class="project-title">Brand Instagram — Reach Recovery</div>
+        <div class="project-desc">Recovered 50% reach drop through Reels-first content strategy, trending audio, and collab posts.</div>
+        <div class="project-results">
+          <div class="result-item">
+            <div class="result-num">3x</div>
+            <div class="result-label">Reach Growth</div>
+          </div>
+          <div class="result-item">
+            <div class="result-num">5K+</div>
+            <div class="result-label">New Followers</div>
+          </div>
+          <div class="result-item">
+            <div class="result-num">4.8%</div>
+            <div class="result-label">Eng. Rate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb project-thumb-4">🛍️</div>
+      <div class="project-body">
+        <div class="project-type">Shopify — CRO</div>
+        <div class="project-title">Online Store — Conversion Optimization</div>
+        <div class="project-desc">Full Shopify CRO audit — speed optimization, abandoned cart emails, trust badges, COD setup.</div>
+        <div class="project-results">
+          <div class="result-item">
+            <div class="result-num">+133%</div>
+            <div class="result-label">Conv. Rate</div>
+          </div>
+          <div class="result-item">
+            <div class="result-num">-40%</div>
+            <div class="result-label">Cart Abandon</div>
+          </div>
+          <div class="result-item">
+            <div class="result-num">2.8s</div>
+            <div class="result-label">Load Time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="reveal">
+    <div class="section-label">Tech Stack</div>
+    <h2 class="section-title">Tools I Use</h2>
+    <p class="section-desc">Industry-standard tools I use daily to research, execute, and optimize campaigns.</p>
+  </div>
+  <div class="tools-grid reveal">
+    <div class="tool-pill"><span class="dot"></span>Meta Ads Manager</div>
+    <div class="tool-pill"><span class="dot"></span>Google Ads</div>
+    <div class="tool-pill"><span class="dot"></span>Google Analytics 4</div>
+    <div class="tool-pill"><span class="dot"></span>Google Search Console</div>
+    <div class="tool-pill"><span class="dot"></span>Meta Business Suite</div>
+    <div class="tool-pill"><span class="dot"></span>SEMrush</div>
+    <div class="tool-pill"><span class="dot"></span>Ahrefs</div>
+    <div class="tool-pill"><span class="dot"></span>Shopify</div>
+    <div class="tool-pill"><span class="dot"></span>Microsoft Clarity</div>
+    <div class="tool-pill"><span class="dot"></span>Canva</div>
+    <div class="tool-pill"><span class="dot"></span>Google Tag Manager</div>
+    <div class="tool-pill"><span class="dot"></span>Klaviyo</div>
+    <div class="tool-pill"><span class="dot"></span>Google My Business</div>
+    <div class="tool-pill"><span class="dot"></span>Meta Pixel</div>
+    <div class="tool-pill"><span class="dot"></span>Hotjar</div>
+    <div class="tool-pill"><span class="dot"></span>Mailchimp</div>
+    <div class="tool-pill"><span class="dot"></span>Notion</div>
+    <div class="tool-pill"><span class="dot"></span>ChatGPT</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Let's Work Together</h2>
+    <p class="section-desc">Looking for freelance projects, full-time roles, or collaboration opportunities.</p>
+  </div>
+  <div class="contact-links reveal">
+    <a href="mailto:yourname@gmail.com" class="contact-link">
+      <span>📧</span> yourname@gmail.com
+    </a>
+    <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="contact-link">
+      <span>💬</span> WhatsApp
+    </a>
+    <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
+      <span>💼</span> LinkedIn
+    </a>
+    <a href="https://instagram.com/yourhandle" target="_blank" class="contact-link">
+      <span>📸</span> Instagram
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DM<span>.</span></div>
+  <div>Designed & Built with ❤️ — Your Name</div>
+  <div>© 2025 All rights reserved</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger child reveals
+  document.querySelectorAll('.skills-grid, .projects-grid, .tools-grid').forEach(grid => {
+    grid.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+</script>
+</body>
+</html>
